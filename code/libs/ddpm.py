@@ -178,11 +178,11 @@ class DDPM(nn.Module):
         Fill in the missing code here. Algorithm 1 line 5 in DDPM paper.
         For a latent diffusion model, an additional encoding step is needed.
         """
-        if noise is None:
-            noise = torch.randn_like(x_start)
-
         if self.use_vae:
             x_start = self.vae.encoder(x_start)
+
+        if noise is None:
+            noise = torch.randn_like(x_start)
 
         # Forward diffusion process to generate x_t
         x_t = self.q_sample(x_start, t, noise)

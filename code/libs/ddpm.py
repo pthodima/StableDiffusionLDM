@@ -182,7 +182,7 @@ class DDPM(nn.Module):
             noise = torch.randn_like(x_start)
 
         if self.use_vae:
-            x_start = self.vae.encode(x_start)
+            x_start = self.vae.encoder(x_start)
 
         # Forward diffusion process to generate x_t
         x_t = self.q_sample(x_start, t, noise)
@@ -246,7 +246,7 @@ class DDPM(nn.Module):
             imgs = self.p_sample(imgs, labels, t, t_index)
 
         if self.use_vae:
-            imgs = self.vae.decode(imgs)
+            imgs = self.vae.decoder(imgs)
 
         # postprocessing the images
         imgs = self.postprocess(imgs)
